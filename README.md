@@ -1,6 +1,6 @@
 Hello!
 
-AutoFactory is created by me, teaching purposes for use in .NET MVC. But i can be used with pretty much anything.
+AutoFactory is created by me, teaching purposes for use in .NET MVC, but it can be used with pretty much anything.
 
 I've used it for games, websites, web apps, native apps and much more.
 
