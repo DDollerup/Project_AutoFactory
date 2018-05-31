@@ -1,5 +1,31 @@
-# Project_AutoFactory
+Hello!
 
+This is an example console project, that shows how the AutoFactory works.
+
+Well, it doesn't actually work, but it shows how to use it :)
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Example.Models; // Get reference to our Models!
+using Example.Models.ViewModels; // Get reference to our ViewModels!
+using Example.Factories; // Where our DBContext relies
+
+namespace Example
+{
+    class Program
+    {
+
+        /*
+         * Set your connectionstring in your web.config file, and name it "String"
+         * You can edit the name of the connectionString in the constructor of AutoFactory.cs
+         */
+
+        private static readonly DBContext context = new DBContext();
+        static void Main(string[] args)
+        {
             /*
                 This is example only, requires a database and connectionstring in order to work.
             */
@@ -114,3 +140,6 @@
             // We can get random entities
             List<Product> randomProducts = context.ProductFactory.TakeRandom(5);
             #endregion
+        }
+    }
+}
