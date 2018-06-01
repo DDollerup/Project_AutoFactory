@@ -1,6 +1,6 @@
 Hello!
 
-AutoFactory is created by DanieL Dollerup, for teaching purposes in .NET MVC, but it can be used with pretty much anything.
+AutoFactory is created by Daniel Dollerup, for teaching purposes in .NET MVC, but it can be used with pretty much anything.
 
 I've used it for games, websites, web apps, native apps and much more.
 
