@@ -5,7 +5,7 @@
  - You are free to use this as you please   -
  - as long as you credit me :)              -
  -                                          -
- - Latest Update: 21-06-2018                -
+ - Latest Update: 26-06-2018                -
  --------------------------------------------
  */
 
@@ -48,9 +48,19 @@ public class AutoFactory<T>
     /// </summary>
     public AutoFactory()
     {
-        this.connectionString = ConfigurationManager.ConnectionStrings["String"].ConnectionString;
-        // Get a list of properties from the current Type
-        properties.AddRange(GetGenericType().GetType().GetProperties());
+        #region .NET
+        // Get the ConnectionString from the WebConfig
+        //connectionString = ConfigurationManager.ConnectionStrings["String"].ConnectionString; 
+        #endregion
+
+        #region .NET CORE
+        IConfiguration configuration = default(IConfiguration);
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json");
+        configuration = builder.Build();
+        connectionString = configuration["ConnectionStrings:DefaultConnection"]; 
+        #endregion
     }
 
     /// <summary>
