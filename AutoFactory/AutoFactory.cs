@@ -1,4 +1,5 @@
 /*
+/*
  --------------------------------------------
  - AutoFactory created by Daniel Dollerup   -
  -                                          -
@@ -33,7 +34,7 @@ public enum WeekdayEN
 public enum SearchSpecifier
 {
     Specific,
-    Unspecifik
+    Unspecific
 }
 public class AutoFactory<T>
 {
@@ -49,17 +50,17 @@ public class AutoFactory<T>
     public AutoFactory()
     {
         #region .NET
-        // Get the ConnectionString from the WebConfig
-        //connectionString = ConfigurationManager.ConnectionStrings["String"].ConnectionString; 
+        //Get the ConnectionString from the WebConfig
+        connectionString = ConfigurationManager.ConnectionStrings["String"].ConnectionString;
         #endregion
 
         #region .NET CORE
-        IConfiguration configuration = default(IConfiguration);
-        var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json");
-        configuration = builder.Build();
-        connectionString = configuration["ConnectionStrings:DefaultConnection"]; 
+        //IConfiguration configuration = default(IConfiguration);
+        //var builder = new ConfigurationBuilder()
+        //    .SetBasePath(Directory.GetCurrentDirectory())
+        //    .AddJsonFile("appsettings.json");
+        //configuration = builder.Build();
+        //connectionString = configuration["ConnectionStrings:DefaultConnection"];
         #endregion
     }
 
@@ -103,6 +104,18 @@ public class AutoFactory<T>
             tokenHash.ComputeHash(System.Text.Encoding.ASCII.GetBytes(typeof(T).Name + nextID));
             tokenProp.SetValue(entity, BitConverter.ToString(tokenHash.Hash).Replace("-", "").ToLower());
         }
+    }
+
+    /// <summary>
+    /// Generates a SHA512 Hash from string value
+    /// </summary>
+    /// <param name="from">value to create from</param>
+    /// <returns></returns>
+    public string GenerateSHA512Hash(string from)
+    {
+        SHA512 tokenHash = new SHA512Managed();
+        tokenHash.ComputeHash(System.Text.Encoding.ASCII.GetBytes(from));
+        return BitConverter.ToString(tokenHash.Hash).Replace("-", "").ToLower();
     }
 
     /// <summary>
