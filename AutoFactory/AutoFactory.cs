@@ -62,6 +62,8 @@ public class AutoFactory<T>
         //configuration = builder.Build();
         //connectionString = configuration["ConnectionStrings:DefaultConnection"];
         #endregion
+        // Get a list of properties from the current Type
+        properties.AddRange(GetGenericType().GetType().GetProperties());
     }
 
     /// <summary>
