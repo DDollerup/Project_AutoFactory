@@ -6,7 +6,7 @@
  - You are free to use this as you please   -
  - as long as you credit me :)              -
  -                                          -
- - Latest Update: 26-06-2018                -
+ - Latest Update: 19-07-2018                -
  --------------------------------------------
  */
 
@@ -62,7 +62,7 @@ public class AutoFactory<T>
         //configuration = builder.Build();
         //connectionString = configuration["ConnectionStrings:DefaultConnection"];
         #endregion
-        // Get a list of properties from the current Type
+
         properties.AddRange(GetGenericType().GetType().GetProperties());
     }
 
@@ -96,7 +96,7 @@ public class AutoFactory<T>
             connection.Open();
 
             SqlCommand cmd = new SqlCommand(sqlQuery, connection);
-            int nextID = Convert.ToInt32(cmd.ExecuteScalar()) + 1;
+            int nextID = Convert.ToInt32(cmd.ExecuteScalar()) + (Count() == 0 ? 0 : 1);
 
             cmd.Dispose();
             connection.Dispose();
