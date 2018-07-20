@@ -39,7 +39,7 @@ public enum SearchSpecifier
 public class AutoFactory<T>
 {
     // Local reference to the ConnectionString set in the WebConfig Root file.
-    private string connectionString = "";
+    private readonly string connectionString = "";
 
     // Creating a List of Properties, containing information about the current Type's properties
     private List<PropertyInfo> properties = new List<PropertyInfo>();
@@ -73,7 +73,7 @@ public class AutoFactory<T>
     private T GetGenericType()
     {
         T t;
-        return t = Activator.CreateInstance<T>();
+        return Activator.CreateInstance<T>();
     }
     private Q GetGenericType<Q>()
     {
@@ -678,7 +678,8 @@ public class AutoFactory<T>
     }
 
     /// <summary>
-    /// Gets all elements from table that matches requirements.
+    /// Gets all elements from table that matches requirements. Joins on ID - Example: Product and Category - You join Category, and it will join
+    /// all tables where Category.ID is the same as Product.CategoryID
     /// </summary>
     /// <typeparam name="T1">Table to join</typeparam>
     /// <param name="value">The search parameter</param>
@@ -762,7 +763,8 @@ public class AutoFactory<T>
     }
 
     /// <summary>
-    /// Gets all elements from table that matches requirements.
+    /// Gets all elements from table that matches requirements. Joins on ID - Example: Product and Category - You join Category, and it will join
+    /// all tables where Category.ID is the same as Product.CategoryID
     /// </summary>
     /// <typeparam name="T1">First table to join</typeparam>
     /// <typeparam name="T2">Second table to join</typeparam>
@@ -861,7 +863,8 @@ public class AutoFactory<T>
     }
 
     /// <summary>
-    /// Gets all elements from table that matches requirements.
+    /// Gets all elements from table that matches requirements. Joins on ID - Example: Product and Category - You join Category, and it will join
+    /// all tables where Category.ID is the same as Product.CategoryID
     /// </summary>
     /// <typeparam name="T1">First to join</typeparam>
     /// <typeparam name="T2">Second table to join</typeparam>
