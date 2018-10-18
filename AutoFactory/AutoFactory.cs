@@ -6,7 +6,7 @@
  - You are free to use this as you please   -
  - as long as you credit me :)              -
  -                                          -
- - Latest Update: 19-07-2018                -
+ - Latest Update: 18-10-2018                -
  --------------------------------------------
  */
 
@@ -39,7 +39,7 @@ public enum SearchSpecifier
 public class AutoFactory<T>
 {
     // Local reference to the ConnectionString set in the WebConfig Root file.
-    private readonly string connectionString = "";
+    private string connectionString = "";
 
     // Creating a List of Properties, containing information about the current Type's properties
     private List<PropertyInfo> properties = new List<PropertyInfo>();
@@ -73,7 +73,7 @@ public class AutoFactory<T>
     private T GetGenericType()
     {
         T t;
-        return Activator.CreateInstance<T>();
+        return t = Activator.CreateInstance<T>();
     }
     private Q GetGenericType<Q>()
     {
@@ -189,7 +189,9 @@ public class AutoFactory<T>
         {
             // Passing in values for the properties
             if (properties[i].Name.ToLower().Contains("id") && i == 0) continue;
-            cmd.Parameters.AddWithValue("@" + properties[i].Name, properties[i].GetValue(entity) ?? DBNull.Value);
+            object prop = properties[i].GetValue(entity);
+            if (prop.GetType() == typeof(DateTime) && ((DateTime)prop) == DateTime.MinValue) prop = DBNull.Value;
+            cmd.Parameters.AddWithValue("@" + properties[i].Name, prop ?? DBNull.Value);
         }
 
         // Executing the SQL statement
@@ -678,8 +680,7 @@ public class AutoFactory<T>
     }
 
     /// <summary>
-    /// Gets all elements from table that matches requirements. Joins on ID - Example: Product and Category - You join Category, and it will join
-    /// all tables where Category.ID is the same as Product.CategoryID
+    /// Gets all elements from table that matches requirements.
     /// </summary>
     /// <typeparam name="T1">Table to join</typeparam>
     /// <param name="value">The search parameter</param>
@@ -763,8 +764,7 @@ public class AutoFactory<T>
     }
 
     /// <summary>
-    /// Gets all elements from table that matches requirements. Joins on ID - Example: Product and Category - You join Category, and it will join
-    /// all tables where Category.ID is the same as Product.CategoryID
+    /// Gets all elements from table that matches requirements.
     /// </summary>
     /// <typeparam name="T1">First table to join</typeparam>
     /// <typeparam name="T2">Second table to join</typeparam>
@@ -863,8 +863,7 @@ public class AutoFactory<T>
     }
 
     /// <summary>
-    /// Gets all elements from table that matches requirements. Joins on ID - Example: Product and Category - You join Category, and it will join
-    /// all tables where Category.ID is the same as Product.CategoryID
+    /// Gets all elements from table that matches requirements.
     /// </summary>
     /// <typeparam name="T1">First to join</typeparam>
     /// <typeparam name="T2">Second table to join</typeparam>
