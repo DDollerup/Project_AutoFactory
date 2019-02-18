@@ -17,7 +17,7 @@ namespace Example
          * You can edit the name of the connectionString in the constructor of AutoFactory.cs
          */
 
-        private static readonly DBContext context = new DBContext();
+        DBContext context = DBContext.Instance;
         static void Main(string[] args)
         {
             /*
