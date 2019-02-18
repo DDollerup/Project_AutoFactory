@@ -7,6 +7,19 @@ namespace Example.Factories
     /// </summary>
     public class DBContext
     {
+        private static volatile DBContext INSTANCE;
+        public static DBContext Instance
+        {
+            get
+            {
+                if (INSTANCE == null)
+                {
+                    INSTANCE = new DBContext();
+                }
+                return INSTANCE;
+            }
+        }
+        
         private AutoFactory<PageIndex> pageIndexFactory;
         private AutoFactory<Product> productFactory;
         private AutoFactory<Category> categoryFactory;
