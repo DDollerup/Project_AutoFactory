@@ -60,7 +60,7 @@ public class AutoFactory
     /// <returns>Salted and Peppered Password</returns>
     public static string GenerateSaltedPassword(string token, string password, bool usePepper = false)
     {
-        return GenerateSHA512Hash(token + password + (usePepper ? ConfigurationManager.AppSettings["Pepper"].ToString() : ""));
+        return GenerateSHA512Hash(token + password + (usePepper ? ConfigurationManager.AppSettings["Pepper"].ToString() : string.Empty));
     }
 }
 
