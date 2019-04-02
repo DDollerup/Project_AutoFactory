@@ -6,7 +6,7 @@
  - You are free to use this as you please   -
  - as long as you credit me :)              -
  -                                          -
- - Latest Update: 22-10-2018                -
+ - Latest Update: 02-04-2019                -
  --------------------------------------------
  */
 
@@ -36,6 +36,34 @@ public enum SearchSpecifier
     Specific,
     Unspecific
 }
+
+public class AutoFactory
+{
+    /// <summary>
+    /// Generates a SHA512 Hash from string value
+    /// </summary>
+    /// <param name="from">value to create from</param>
+    /// <returns>Hashed Value</returns>
+    public static string GenerateSHA512Hash(string from)
+    {
+        SHA512 tokenHash = new SHA512Managed();
+        tokenHash.ComputeHash(System.Text.Encoding.ASCII.GetBytes(from));
+        return BitConverter.ToString(tokenHash.Hash).Replace("-", "").ToLower();
+    }
+
+    /// <summary>
+    /// Generates Salted Password based on Token and
+    /// </summary>
+    /// <param name="token"></param>
+    /// <param name="password"></param>
+    /// <param name="usePepper">If set to true, add a Pepper key to AppSettings in Web.Config</param>
+    /// <returns>Salted and Peppered Password</returns>
+    public static string GenerateSaltedPassword(string token, string password, bool usePepper = false)
+    {
+        return GenerateSHA512Hash(token + password + (usePepper ? ConfigurationManager.AppSettings["Pepper"].ToString() : ""));
+    }
+}
+
 public class AutoFactory<T>
 {
     // Local reference to the ConnectionString set in the WebConfig Root file.
@@ -106,18 +134,6 @@ public class AutoFactory<T>
             tokenHash.ComputeHash(System.Text.Encoding.ASCII.GetBytes(typeof(T).Name + nextID));
             tokenProp.SetValue(entity, BitConverter.ToString(tokenHash.Hash).Replace("-", "").ToLower());
         }
-    }
-
-    /// <summary>
-    /// Generates a SHA512 Hash from string value
-    /// </summary>
-    /// <param name="from">value to create from</param>
-    /// <returns></returns>
-    public string GenerateSHA512Hash(string from)
-    {
-        SHA512 tokenHash = new SHA512Managed();
-        tokenHash.ComputeHash(System.Text.Encoding.ASCII.GetBytes(from));
-        return BitConverter.ToString(tokenHash.Hash).Replace("-", "").ToLower();
     }
 
     /// <summary>
