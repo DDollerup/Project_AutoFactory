@@ -6,7 +6,7 @@
  - You are free to use this as you please   -
  - as long as you credit me :)              -
  -                                          -
- - Latest Update: 02-04-2019                -
+ - Latest Update: 03-04-2019                -
  --------------------------------------------
  */
 
@@ -161,7 +161,7 @@ public class AutoFactory<T>
                 PropertyInfo property = properties[i];
                 if (property.Name.ToLower().Contains("id") && i == 0) continue;
 
-                sqlQuery += property.Name;
+                sqlQuery += "[" + property.Name + "]";
                 sqlQuery += (i + 1 == properties.Count ? "" : ", ");
             }
 
@@ -237,7 +237,7 @@ public class AutoFactory<T>
             PropertyInfo property = properties[i];
             if (property.Name.ToLower().Contains("id") && i == 0) continue;
 
-            sqlQuery += property.Name + "=@" + property.Name;
+            sqlQuery += "[" + property.Name + "]" + "=@" + property.Name;
             sqlQuery += (i + 1 == properties.Count ? "" : ", ");
         }
 
